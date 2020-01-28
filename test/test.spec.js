@@ -2,6 +2,11 @@ import {actions} from './../store/index';
 import axios from 'axios';
 import { Server } from "miragejs"
 
+axios.$get = async (url) => {
+  const result = await axios.get(url);
+  return result.data;
+};
+
 let action;
 let server;
 
