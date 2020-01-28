@@ -10,8 +10,8 @@ export const mutations = {
 
 export const actions = {
   async getLangs({commit}) {
-    const result = await this.$axios.get('/langs');
+    const {langs} = await this.$axios.get('/langs');
 
-    commit('setLangs', result)
+    commit('setLangs', langs)
   }
 };
