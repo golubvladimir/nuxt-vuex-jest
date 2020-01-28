@@ -7,6 +7,10 @@ const app = express()
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
 
+app.get('/langs', (req, res) => {
+  res.status(200).json({langs: ['en', 'ru']})
+});
+
 async function start () {
   // Init Nuxt.js
   const nuxt = new Nuxt(config)
