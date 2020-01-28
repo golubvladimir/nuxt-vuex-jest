@@ -8,10 +8,19 @@ export const mutations = {
   }
 };
 
+export const getters = {
+  langs: state => state.langs
+};
+
 export const actions = {
   async getLangs({commit}) {
-    const {langs} = await this.$axios.get('/langs');
+    const langs = await this.$axios.$get('/langs');
+    //const {data} = await this.$axios.get('/langs');
 
-    commit('setLangs', langs)
+    console.log(langs);
+    //console.log(data.langs)
+
+    commit('setLangs', langs);
+    //commit('setLangs', data.langs);
   }
 };
