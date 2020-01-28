@@ -14,13 +14,8 @@ export const getters = {
 
 export const actions = {
   async getLangs({commit}) {
-    const langs = await this.$axios.$get('/langs');
-    //const {data} = await this.$axios.get('/langs');
-
-    console.log(langs);
-    //console.log(data.langs)
+    const {langs} = await this.$axios.$get('/langs');
 
     commit('setLangs', langs);
-    //commit('setLangs', data.langs);
   }
 };
