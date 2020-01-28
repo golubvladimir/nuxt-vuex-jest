@@ -1,6 +1,8 @@
-import {actions} from './../store/index';
+import {actions, getters, mutations, state} from './../store/index';
 import axios from 'axios';
-import { Server } from "miragejs"
+import { Server } from "miragejs";
+import { createLocalVue } from '@vue/test-utils';
+import Vuex from 'vuex'
 
 axios.$get = async (url) => {
   const result = await axios.get(url);
@@ -10,11 +12,18 @@ axios.$get = async (url) => {
 let action;
 let server;
 
+const storeConfig = {
+  state,
+  getters,
+  mutations,
+  actions
+};
+
 beforeEach(() => {
   server = new Server({
     routes() {
       this.get("/langs", () => ({
-        locales: ['en', 'ru']
+        langs: ['en', 'ru']
       }))
     },
   })
@@ -32,7 +41,14 @@ describe(`store`, () => {
   describe(`actions`, () => {
     describe(action = 'getLangs', () => {
       it(`returns an empty array if axios returns an empty array`, async (done) => {
-        expect(await testedAction()).toEqual({locales: ['en', 'ru']});
+        const localVue = createLocalVue();
+        localVue.use(Vuex);
+
+        const store = new Vuex.Store(storeConfig);
+
+        expect(await testedAction(store));
+        expect(store.getters.langs).toEqual(['en', 'ru']);
+
         done();
       });
     });
